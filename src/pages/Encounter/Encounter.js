@@ -67,7 +67,7 @@ function Encounter() {
 
   const handleSearchKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // ما يعملش submit للفورم
+      e.preventDefault(); 
       if (matches.length > 0) choosePatient(matches[0]);
     }
     if (e.key === "Escape") setOpen(false);
