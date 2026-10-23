@@ -5,22 +5,24 @@ import { EncounterIcon, AlertIcon, ClockIcon, PinIcon } from "../../components/I
 import "./Encounter.css";
 
 const CLASSIFICATIONS = [
-  { value: "Routine", tone: "success" },
-  { value: "Urgent", tone: "warning" },
-  { value: "Emergency", tone: "danger" },
+  "Gastrointestinal",
+  "Skin & Allergy",
+  "Heat-related",
+  "Injury / Trauma",
+  "Respiratory",
+  "Other",
 ];
 
 const emptyForm = {
   complaint: "",
   history: "",
-  classification: "Routine",
+  classification: "Gastrointestinal",
   examination: "",
   diagnosis: "",
   treatment: "",
   followUpDate: "",
 };
 
-const toneOf = (c) => CLASSIFICATIONS.find((x) => x.value === c)?.tone || "muted";
 const hasAllergy = (a) => a && String(a).toLowerCase() !== "none";
 const initials = (name = "") =>
   name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
@@ -67,7 +69,7 @@ function Encounter() {
 
   const handleSearchKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); 
+      e.preventDefault();
       if (matches.length > 0) choosePatient(matches[0]);
     }
     if (e.key === "Escape") setOpen(false);
@@ -186,22 +188,16 @@ function Encounter() {
             <textarea name="history" value={form.history} onChange={handleChange} />
           </label>
 
-          <div className="enc-field">
-            <span className="enc-label">Classification</span>
-            <div className="enc-seg">
+
+          <label>
+            Classification
+            <select name="classification" value={form.classification} onChange={handleChange}>
               {CLASSIFICATIONS.map((c) => (
-                <button
-                  type="button"
-                  key={c.value}
-                  className={`enc-seg-btn tone-${c.tone} ${form.classification === c.value ? "active" : ""}`}
-                  onClick={() => setForm({ ...form, classification: c.value })}
-                >
-                  <span className="enc-seg-dot" />
-                  {c.value}
-                </button>
+                <option key={c} value={c}>{c}</option>
               ))}
-            </div>
-          </div>
+            </select>
+          </label>
+
 
           <label>
             Examination
@@ -240,10 +236,8 @@ function Encounter() {
             <ul className="enc-list">
               {todaysVisits.map((v) => {
                 const p = getPatient(v.patientId);
-                const tone = toneOf(v.classification);
                 return (
                   <li key={v.id} className="enc-row">
-                    <span className={`enc-dot enc-dot-${tone}`} />
                     <div className="enc-row-main">
                       <strong>{p?.name || "Unknown patient"}</strong>
                       <span className="enc-meta">
@@ -260,7 +254,7 @@ function Encounter() {
                         </div>
                       )}
                     </div>
-                    <span className={`badge badge-${tone}`}>{v.classification}</span>
+                    <span className="badge badge-muted">{v.classification}</span>
                   </li>
                 );
               })}

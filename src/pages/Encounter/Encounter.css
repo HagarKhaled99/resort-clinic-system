@@ -153,31 +153,6 @@
 .enc-alert strong { display: block; font-size: 14px; }
 .enc-alert span { font-size: 13.5px; color: #991b1b; font-weight: 400; }
 
-/* ---------- Classification buttons ---------- */
-.enc-seg { display: flex; gap: 8px; flex-wrap: wrap; }
-.enc-seg-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 12px;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.enc-seg-btn:hover { background: #f7f9fc; }
-.enc-seg-dot { width: 10px; height: 10px; border-radius: 50%; }
-.enc-seg-btn.tone-success .enc-seg-dot { background: var(--success); }
-.enc-seg-btn.tone-warning .enc-seg-dot { background: var(--accent); }
-.enc-seg-btn.tone-danger .enc-seg-dot { background: var(--danger); }
-.enc-seg-btn.active.tone-success { background: #ecfdf5; border-color: var(--success); }
-.enc-seg-btn.active.tone-warning { background: var(--accent-soft); border-color: var(--accent); }
-.enc-seg-btn.active.tone-danger { background: var(--danger-soft); border-color: var(--danger); }
 
 .enc-message { margin: 0; font-weight: 600; font-size: 14px; }
 .enc-message.success { color: var(--success); }
@@ -212,12 +187,6 @@
   border-radius: 10px;
 }
 .enc-details p { margin: 3px 0; font-size: 13px; }
-
-.enc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-.enc-dot-success { background: var(--success); }
-.enc-dot-warning { background: var(--accent); }
-.enc-dot-danger { background: var(--danger); }
-.enc-dot-muted { background: var(--text-muted); }
 
 @media (max-width: 1000px) {
   .enc-layout { grid-template-columns: 1fr; }
