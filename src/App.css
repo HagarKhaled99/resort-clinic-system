@@ -1,0 +1,111 @@
+/* ===========================================================
+   Global styles + color variables used by every page.
+   Use these variables in your own CSS, e.g.  color: var(--primary);
+   =========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #2c5d94;        /* calm blue */
+  --primary-dark: #234b7a;
+  --primary-soft: #e9f0f9;
+  --accent: #f59e0b;         /* sand / warning */
+  --accent-soft: #fef3c7;
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+  --info: #5b5bd6;
+  --info-soft: #ececfd;
+
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --border: #e2e7ee;
+  --text: #16202d;
+  --text-muted: #5f6b7a;
+
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(20, 32, 52, 0.04), 0 4px 16px rgba(20, 32, 52, 0.06);
+  --sidebar-width: 256px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------- Reusable pieces (anyone can use these classes) ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: var(--surface); border-color: var(--border); }
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-success { background: var(--success-soft); color: #15803d; }
+.badge-warning { background: var(--accent-soft); color: #b45309; }
+.badge-danger  { background: var(--danger-soft); color: #b91c1c; }
+.badge-info    { background: var(--info-soft); color: #4848c0; }
+.badge-muted   { background: #eef2f7; color: var(--text-muted); }
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
