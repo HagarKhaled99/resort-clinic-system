@@ -1,0 +1,551 @@
+
+.medications-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: var(--text);
+}
+
+.medications-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.medications-eyebrow {
+  margin: 0 0 8px;
+  color: #168b91;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+.medications-hero h2 {
+  margin: 0;
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 750;
+  letter-spacing: -0.7px;
+}
+
+.medications-subtitle {
+  margin: 9px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.medications-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 10px;
+  box-shadow: 0 5px 14px rgba(44, 93, 148, 0.15);
+}
+
+.medications-add-button span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.medication-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.medication-stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 0;
+  padding: 20px 17px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.medication-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.medication-stat-icon.ocean {
+  color: #2c5d94;
+  background: #e9f0f9;
+}
+
+.medication-stat-icon.teal {
+  color: #087f82;
+  background: #ddf5f1;
+}
+
+.medication-stat-icon.amber {
+  color: #a96308;
+  background: #fff0d6;
+}
+
+.medication-stat-icon.coral {
+  color: #bd4545;
+  background: #ffebeb;
+}
+
+.medication-stat-card p {
+  margin: 2px 0 7px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.medication-stat-card strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 27px;
+  line-height: 1.1;
+  font-weight: 750;
+}
+
+.medication-stat-card div > span {
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.medication-expiry-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 15px 17px;
+  border: 1px solid #f4d6a0;
+  border-radius: 12px;
+  background: #fff9ed;
+  color: #89540d;
+}
+
+.medication-expiry-notice > span {
+  font-size: 20px;
+}
+
+.medication-expiry-notice strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.medication-expiry-notice p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.medications-message {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #bce6d0;
+  border-radius: 10px;
+  background: #edfaf2;
+  color: #167345;
+  font-size: 13px;
+}
+
+.medication-form {
+  padding: 24px;
+  margin-bottom: 22px;
+}
+
+.medication-form-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.medication-form-heading h3,
+.medication-table-toolbar h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.medication-form-heading p,
+.medication-table-toolbar p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.medication-close-button {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.medication-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.medication-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.medication-form-grid input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.medication-form-grid input:focus,
+.medication-search:focus-within {
+  border-color: #168b91;
+  outline: 2px solid rgba(22, 139, 145, 0.12);
+}
+
+.medication-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.medication-table-card {
+  padding: 22px;
+  overflow: hidden;
+}
+
+.medication-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.medication-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 290px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.medication-search > span {
+  font-size: 23px;
+}
+
+.medication-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.medication-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.medication-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.medication-filter > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 6px;
+  background: var(--bg);
+  font-size: 10px;
+}
+
+.medication-filter:hover,
+.medication-filter.selected {
+  border-color: #168b91;
+  background: #e8f7f5;
+  color: #087f82;
+}
+
+.medication-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.medication-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.medication-table th {
+  padding: 14px 13px;
+  border-bottom: 1px solid var(--border);
+  background: #f2f7f9;
+  color: #536474;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.medication-table td {
+  padding: 16px 13px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.medication-table tbody tr {
+  transition: background 0.2s;
+}
+
+.medication-table tbody tr:hover {
+  background: #f7fbfc;
+}
+
+.medication-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.medication-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.medication-name > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.medication-name strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.medication-name small {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.medication-pill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: #e8f7f5;
+  color: #087f82;
+  font-size: 20px;
+}
+
+.medication-quantity {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.medication-units {
+  font-size: 10px;
+}
+
+.medication-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.medication-status.good {
+  background: #e7f7ed;
+  color: #167345;
+}
+
+.medication-status.low {
+  background: #fff1d9;
+  color: #9a5b06;
+}
+
+.medication-status.expiring {
+  background: #ffefdc;
+  color: #a85b0a;
+}
+
+.medication-status.expired {
+  background: #fee8e8;
+  color: #b42323;
+}
+
+.medication-status > span {
+  font-size: 7px;
+}
+
+.medication-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.medication-delete:hover {
+  border-color: #fecaca;
+  background: #fff0f0;
+  color: #b42323;
+}
+
+.medication-empty {
+  padding: 36px 12px !important;
+  text-align: center;
+  white-space: normal !important;
+}
+
+.medication-empty > span,
+.medication-empty strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.medication-empty > span {
+  font-size: 25px;
+}
+
+.medication-empty p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.medication-table-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 16px;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+  .medication-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .medications-hero {
+    align-items: flex-start;
+  }
+
+  .medications-add-button {
+    width: 100%;
+  }
+
+  .medication-stats {
+    gap: 10px;
+  }
+
+  .medication-stat-card {
+    gap: 10px;
+    padding: 14px 11px;
+  }
+
+  .medication-stat-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .medication-stat-card strong {
+    font-size: 23px;
+  }
+
+  .medication-form,
+  .medication-table-card {
+    padding: 15px;
+  }
+
+  .medication-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-table-toolbar {
+    align-items: stretch;
+  }
+
+  .medication-search {
+    max-width: none;
+  }
+
+  .medication-table-footer {
+    flex-direction: column;
+  }
+}
