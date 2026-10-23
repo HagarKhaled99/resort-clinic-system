@@ -1,0 +1,245 @@
+
+.emergency-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--text);
+}
+
+.emergency-page-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.emergency-page-heading h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.emergency-heading-arrow {
+  font-size: 25px;
+  color: var(--text-muted);
+}
+
+.emergency-form {
+  padding: 24px;
+}
+
+.emergency-field {
+  display: block;
+  margin-bottom: 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.required {
+  color: var(--danger);
+}
+
+.emergency-select-wrap,
+.emergency-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.emergency-select-wrap:focus-within,
+.emergency-input-wrap:focus-within {
+  border-color: var(--primary);
+  outline: 2px solid var(--primary-soft);
+}
+
+.emergency-field-icon {
+  color: var(--text-muted);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.emergency-select-wrap select,
+.emergency-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  padding: 14px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.emergency-field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  min-height: 125px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.emergency-field textarea:focus {
+  border-color: var(--primary);
+  outline: 2px solid var(--primary-soft);
+}
+
+.emergency-field input::placeholder,
+.emergency-field textarea::placeholder {
+  color: #8793a3;
+}
+
+.emergency-send-button {
+  width: 100%;
+  gap: 10px;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.emergency-send-button:hover {
+  background: var(--primary-dark);
+}
+
+.emergency-message {
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 14px;
+}
+
+.emergency-info-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 10px;
+  background: var(--danger-soft);
+  color: #991b1b;
+}
+
+.emergency-info-icon {
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+.emergency-info-banner p {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.emergency-siren {
+  font-size: 26px;
+  color: var(--danger);
+}
+
+.emergency-recent-alerts {
+  margin-top: 28px;
+}
+
+.emergency-recent-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.emergency-recent-heading h3 {
+  font-size: 18px;
+}
+
+.emergency-recent-heading > span {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.emergency-alert-item {
+  padding: 18px;
+  margin-bottom: 12px;
+}
+
+.emergency-alert-item-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.emergency-alert-item-heading strong {
+  flex: 1;
+}
+
+.emergency-alert-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.emergency-alert-dot.active {
+  background: var(--danger);
+}
+
+.emergency-alert-dot.resolved {
+  background: var(--success);
+}
+
+.emergency-status {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.emergency-status.active {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.emergency-status.resolved {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.emergency-alert-detail,
+.emergency-alert-time {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.emergency-resolve-button {
+  margin-top: 14px;
+}
+
+@media (max-width: 600px) {
+  .emergency-form {
+    padding: 16px;
+  }
+
+  .emergency-info-banner {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .emergency-siren {
+    display: none;
+  }
+}
