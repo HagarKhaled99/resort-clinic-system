@@ -1,7 +1,8 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Medications.css";
 import { getMedicationStatus } from "../../utils/medicationStatus";
+import { searchMedicines } from "./medicineApi";
 
 const initialMedications = [
   {
@@ -89,6 +90,49 @@ function Medications() {
   const [expiry, setExpiry] = useState("");
   const [message, setMessage] = useState("");
 
+  // RxNav medicine suggestions
+  const [suggestions, setSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const skipNextSearch = useRef(false);
+
+  useEffect(() => {
+    let active = true;
+
+    if (skipNextSearch.current) {
+      skipNextSearch.current = false;
+      return;
+    }
+
+    if (name.trim().length < 2) {
+      setSuggestions([]);
+      setIsSearching(false);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setIsSearching(true);
+
+      const results = await searchMedicines(name);
+
+      if (active) {
+        setSuggestions(results);
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [name]);
+
+  function selectMedicine(medicine) {
+    skipNextSearch.current = true;
+    setName(medicine);
+    setSuggestions([]);
+    setIsSearching(false);
+  }
+
   const medicationRows = useMemo(
     () =>
       medications.map((med) => ({
@@ -152,6 +196,7 @@ function Medications() {
     setQuantity("");
     setMinQuantity("");
     setExpiry("");
+    setSuggestions([]);
 
     setShowForm(false);
     setFilter("All");
@@ -284,8 +329,32 @@ function Medications() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Paracetamol"
+                autoComplete="off"
                 required
               />
+
+              {isSearching && (
+                <small>Searching medicines...</small>
+              )}
+
+              {suggestions.length > 0 && (
+                <div
+                  className="medicine-suggestions"
+                  role="listbox"
+                  aria-label="Medicine suggestions"
+                >
+                  {suggestions.map((medicine, index) => (
+                    <button
+                      key={`${medicine}-${index}`}
+                      type="button"
+                      className="medicine-suggestion-item"
+                      onClick={() => selectMedicine(medicine)}
+                    >
+                      {medicine}
+                    </button>
+                  ))}
+                </div>
+              )}
             </label>
 
             <label>
@@ -438,7 +507,6 @@ function Medications() {
                   </td>
 
                   <td>{med.type}</td>
-
                   <td>{med.batch}</td>
 
                   <td>
@@ -449,7 +517,6 @@ function Medications() {
                   </td>
 
                   <td>{med.minQuantity}</td>
-
                   <td>{formatExpiry(med.expiry)}</td>
 
                   <td>
