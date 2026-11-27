@@ -60,6 +60,96 @@
 }
 .enc-form textarea { min-height: 72px; resize: vertical; }
 
+/* ---------- Sections ---------- */
+.enc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  min-width: 0;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.enc-section legend {
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.enc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  min-width: 0;
+}
+.enc-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.enc-span-all { grid-column: 1 / -1; }
+.enc-exam-item { display: flex; flex-direction: column; gap: 8px; }
+.enc-warn { color: #c2410c; font-size: 12.5px; font-weight: 600; }
+.enc-hint { color: var(--text-muted); font-size: 13px; }
+
+/* ---------- Chips ---------- */
+.enc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.enc-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  color: inherit;
+}
+.enc-chip:hover { background: var(--primary-soft); }
+.enc-chip:focus-visible { outline: 2px solid var(--primary); }
+.enc-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---------- Radios, range, link button ---------- */
+.enc-radios { display: flex; gap: 20px; }
+.enc-form label.enc-radio {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
+.enc-form input[type="radio"],
+.enc-form input[type="range"] {
+  padding: 0;
+  border: none;
+  width: auto;
+}
+.enc-form input[type="range"] { width: 100%; }
+.enc-link {
+  align-self: flex-start;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ---------- Patient bar ---------- */
+.enc-patient-bar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0;
+  background: #fff;
+}
+
 /* ---------- Patient picker ---------- */
 .enc-picker { position: relative; }
 .enc-picker input { width: 100%; box-sizing: border-box; }
@@ -153,7 +243,6 @@
 .enc-alert strong { display: block; font-size: 14px; }
 .enc-alert span { font-size: 13.5px; color: #991b1b; font-weight: 400; }
 
-
 .enc-message { margin: 0; font-weight: 600; font-size: 14px; }
 .enc-message.success { color: var(--success); }
 .enc-message.error { color: var(--danger); }
@@ -190,4 +279,8 @@
 
 @media (max-width: 1000px) {
   .enc-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .enc-grid,
+  .enc-grid-2 { grid-template-columns: 1fr; }
 }
