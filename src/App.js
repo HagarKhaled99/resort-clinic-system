@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -7,15 +8,19 @@ import Layout from './components/Layout/Layout';
 // ---- Hagar ----
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+
 // ---- Menna ----
 import Patients from './pages/Patients/Patients';
 import Encounter from './pages/Encounter/Encounter';
+
 // ---- Salma ----
 import Medications from './pages/Medications/Medications';
 import Emergency from './pages/Emergency/Emergency';
+
 // ---- Marvey ----
 import Statistics from './pages/Statistics/Statistics';
 import PatientForm from './pages/PatientForm/PatientForm';
+import PatientIntakeForm from './pages/PatientIntakeForm/PatientIntakeForm';
 
 // Any page inside this wrapper needs the user to be logged in.
 function ProtectedRoute({ children }) {
@@ -51,6 +56,7 @@ function App() {
             element={<RoleRoute roles={['doctor']}><Statistics /></RoleRoute>}
           />
           <Route path="/patient-form" element={<PatientForm />} />
+          <Route path="/patient-intake" element={<PatientIntakeForm />} />
         </Route>
 
         {/* Anything else → dashboard (or login if not logged in) */}

@@ -15,7 +15,7 @@ export const navItems = [
   { to: '/medications', label: 'Medications', icon: PillIcon },
   { to: '/emergency', label: 'Emergency Alert', icon: AlertIcon },
     { to: '/statistics', label: 'Monthly Statistics', icon: ChartIcon, roles: ['doctor'] },
-  { to: '/patient-form', label: 'Patient Form', icon: PrinterIcon },
+  { to: '/patient-intake', label: 'Patient Intake Form', icon: PrinterIcon },
 ];
 
 const initials = (name = '') =>
