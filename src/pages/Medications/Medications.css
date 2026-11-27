@@ -417,17 +417,17 @@
   font-weight: 750;
 }
 
-.medication-status.good {
+.medication-status.valid {
   background: #e7f7ed;
   color: #167345;
 }
 
-.medication-status.low {
+.medication-status.low-stock {
   background: #fff1d9;
   color: #9a5b06;
 }
 
-.medication-status.expiring {
+.medication-status.expiring-soon {
   background: #ffefdc;
   color: #a85b0a;
 }

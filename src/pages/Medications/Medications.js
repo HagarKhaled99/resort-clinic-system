@@ -1,6 +1,7 @@
 
 import React, { useMemo, useState } from "react";
 import "./Medications.css";
+import { getMedicationStatus } from "../../utils/medicationStatus";
 
 const initialMedications = [
   { id: 1, name: "Paracetamol", quantity: 50, expiry: "2026-12" },
@@ -11,21 +12,11 @@ const initialMedications = [
   { id: 6, name: "Vitamin D", quantity: 40, expiry: "2027-02" },
 ];
 
-function getMedicationStatus(med) {
-  const today = new Date();
-  const currentMonth = today.getFullYear() * 12 + today.getMonth();
-  const [year, month] = med.expiry.split("-").map(Number);
-  const expiryMonth = year * 12 + month - 1;
-
-  if (expiryMonth < currentMonth) return "Expired";
-  if (expiryMonth <= currentMonth + 2) return "Expiring";
-  if (Number(med.quantity) <= 20) return "Low";
-  return "Good";
-}
-
 function formatExpiry(expiry) {
   if (!expiry) return "—";
+
   const [year, month] = expiry.split("-");
+
   return new Date(Number(year), Number(month) - 1, 1).toLocaleDateString(
     "en-GB",
     { month: "short", year: "numeric" }
@@ -53,9 +44,9 @@ function Medications() {
 
   const stats = {
     total: medications.length,
-    low: medicationRows.filter((med) => med.status === "Low").length,
+    low: medicationRows.filter((med) => med.status === "Low Stock").length,
     expiring: medicationRows.filter(
-      (med) => med.status === "Expiring" || med.status === "Expired"
+      (med) => med.status === "Expiring Soon" || med.status === "Expired"
     ).length,
     units: medications.reduce((sum, med) => sum + Number(med.quantity), 0),
   };
@@ -63,6 +54,7 @@ function Medications() {
   const filteredMedications = medicationRows.filter((med) => {
     const matchesSearch = med.name.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === "All" || med.status === filter;
+
     return matchesSearch && matchesFilter;
   });
 
@@ -90,6 +82,7 @@ function Medications() {
     const confirmed = window.confirm(
       "Are you sure you want to remove this medication?"
     );
+
     if (!confirmed) return;
 
     setMedications((current) => current.filter((med) => med.id !== id));
@@ -100,7 +93,6 @@ function Medications() {
     <section className="medications-page">
       <div className="medications-hero">
         <div>
-          
           <h2>Medication Inventory</h2>
           <p className="medications-subtitle">
             Keep track of clinic supplies, stock levels and expiry dates.
@@ -168,8 +160,8 @@ function Medications() {
           <div>
             <strong>Expiry review needed</strong>
             <p>
-              Check medicines marked Expired or Expiring before use. Follow
-              your clinic's medication-handling policy.
+              Check medicines marked Expired or Expiring Soon before use.
+              Follow your clinic's medication-handling policy.
             </p>
           </div>
         </div>
@@ -182,6 +174,7 @@ function Medications() {
               <h3>Add a medication</h3>
               <p>Enter the details for the clinic inventory.</p>
             </div>
+
             <button
               type="button"
               className="medication-close-button"
@@ -231,6 +224,7 @@ function Medications() {
             <button type="submit" className="btn btn-primary">
               Save Medication
             </button>
+
             <button
               type="button"
               className="btn btn-outline"
@@ -261,26 +255,27 @@ function Medications() {
         </div>
 
         <div className="medication-filters" aria-label="Filter medications">
-          {["All", "Good", "Low", "Expiring", "Expired"].map((status) => (
-            <button
-              key={status}
-              type="button"
-              className={`medication-filter ${
-                filter === status ? "selected" : ""
-              }`}
-              onClick={() => setFilter(status)}
-              aria-pressed={filter === status}
-            >
-              {status}
-              {status === "All" ? (
-                <span>{medications.length}</span>
-              ) : (
+          {["All", "Valid", "Expiring Soon", "Expired", "Low Stock"].map(
+            (status) => (
+              <button
+                key={status}
+                type="button"
+                className={`medication-filter ${
+                  filter === status ? "selected" : ""
+                }`}
+                onClick={() => setFilter(status)}
+                aria-pressed={filter === status}
+              >
+                {status}
                 <span>
-                  {medicationRows.filter((med) => med.status === status).length}
+                  {status === "All"
+                    ? medications.length
+                    : medicationRows.filter((med) => med.status === status)
+                        .length}
                 </span>
-              )}
-            </button>
-          ))}
+              </button>
+            )
+          )}
         </div>
 
         <div className="medication-table-wrapper">
@@ -309,20 +304,26 @@ function Medications() {
                       </span>
                     </span>
                   </td>
+
                   <td>
                     <strong className="medication-quantity">
                       {med.quantity}
                     </strong>
                     <span className="medication-units"> units</span>
                   </td>
+
                   <td>{formatExpiry(med.expiry)}</td>
+
                   <td>
                     <span
-                      className={`medication-status ${med.status.toLowerCase()}`}
+                      className={`medication-status ${med.status
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                     >
                       <span aria-hidden="true">●</span> {med.status}
                     </span>
                   </td>
+
                   <td>
                     <button
                       type="button"
