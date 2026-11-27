@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { getCurrentUser } from '../../utils/auth';
+import { getCurrentUser, isDoctor, isNurse } from '../../utils/auth';
 import {
   visits, followUps, medications, emergencyAlerts, getPatient, todayISO,
 } from '../../data/mockData';
@@ -68,9 +68,11 @@ function Dashboard() {
           <button className="btn btn-outline" onClick={() => navigate('/patients')}>
             <PlusIcon size={17} /> New patient
           </button>
+          {isDoctor() && (
           <button className="btn btn-primary" onClick={() => navigate('/encounter')}>
             <EncounterIcon size={17} /> New visit
           </button>
+          )}
         </div>
       </section>
 
@@ -179,9 +181,11 @@ function Dashboard() {
               </li>
             ))}
           </ul>
+          {isNurse() && (
           <button className="btn btn-danger panel-btn" onClick={() => navigate('/emergency')}>
             <AlertIcon size={16} /> Send emergency alert
           </button>
+          )}
         </article>
         {/* Recent visits */}
         <article className="card panel panel-wide">

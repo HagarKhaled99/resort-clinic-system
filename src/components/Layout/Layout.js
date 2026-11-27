@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { getCurrentUser, logout } from '../../utils/auth';
+import { getCurrentUser, logout, hasRole } from '../../utils/auth';
 import {
   DashboardIcon, PatientsIcon, EncounterIcon, PillIcon, AlertIcon,
   ChartIcon, PrinterIcon, LogoutIcon, MenuIcon, CloseIcon, LogoMark,
@@ -14,7 +14,7 @@ export const navItems = [
   { to: '/encounter', label: 'Clinical Encounter', icon: EncounterIcon },
   { to: '/medications', label: 'Medications', icon: PillIcon },
   { to: '/emergency', label: 'Emergency Alert', icon: AlertIcon },
-  { to: '/statistics', label: 'Monthly Statistics', icon: ChartIcon },
+    { to: '/statistics', label: 'Monthly Statistics', icon: ChartIcon, roles: ['doctor'] },
   { to: '/patient-form', label: 'Patient Form', icon: PrinterIcon },
 ];
 
@@ -24,6 +24,8 @@ const initials = (name = '') =>
 function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const user = getCurrentUser();
+    // Items without "roles" are for everyone; others only for those roles
+  const visibleItems = navItems.filter((item) => !item.roles || hasRole(...item.roles));
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -51,7 +53,7 @@ function Layout() {
 
         <nav className="sidebar-nav">
           <span className="nav-heading">Menu</span>
-          {navItems.map(({ to, label, icon: Icon }) => (
+          {visibleItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
