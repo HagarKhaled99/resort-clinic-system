@@ -17,6 +17,7 @@
 .pt-head h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 .pt-head p { color: var(--text-muted); margin-top: 4px; }
 
+
 .pt-layout {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -182,12 +183,26 @@
 
 .pt-empty { color: var(--text-muted); padding: 20px 0; text-align: center; }
 
-/* ---------- Add patient form ---------- */
+/* ---------- Add / edit patient form ---------- */
+.pt-form { display: flex; flex-direction: column; gap: 16px; }
+.pt-section {
+  margin: 0;
+  min-width: 0;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.pt-section legend {
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
 .pt-form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-bottom: 14px;
 }
 .pt-form-grid label {
   display: flex;
@@ -199,7 +214,8 @@
 .pt-form-grid label.wide { grid-column: 1 / -1; }
 .pt-form-grid input,
 .pt-form-grid select,
-.pt-form-grid textarea {
+.pt-form-grid textarea,
+.pt-text {
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -209,16 +225,62 @@
 }
 .pt-form-grid input:focus,
 .pt-form-grid select:focus,
-.pt-form-grid textarea:focus {
+.pt-form-grid textarea:focus,
+.pt-text:focus {
   outline: 2px solid var(--primary-soft);
   border-color: var(--primary);
 }
 .pt-form-grid textarea { min-height: 70px; resize: vertical; }
+.pt-text { width: 100%; box-sizing: border-box; margin-top: 8px; }
+
+/* Phone: country code + number */
+.pt-phone-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.pt-phone { display: flex; gap: 8px; }
+.pt-phone select { flex: 0 0 44%; min-width: 0; }
+.pt-phone input { flex: 1; min-width: 0; }
+
+/* Yes / No questions */
+.pt-yn-list { display: flex; flex-direction: column; gap: 4px; }
+.pt-yn { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.pt-yn:last-child { border-bottom: none; }
+.pt-yn-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.pt-yn-options { display: flex; gap: 20px; }
+.pt-yn-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* Complaint checkboxes */
+.pt-checks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 16px;
+}
+.pt-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.pt-form-actions { display: flex; gap: 10px; }
 
 @media (max-width: 1000px) {
   .pt-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
-  .pt-grid, .pt-form-grid { grid-template-columns: 1fr; }
+  .pt-grid, .pt-form-grid, .pt-checks { grid-template-columns: 1fr; }
   .pt-record-head .btn { width: 100%; }
 }
