@@ -4,12 +4,60 @@ import "./Medications.css";
 import { getMedicationStatus } from "../../utils/medicationStatus";
 
 const initialMedications = [
-  { id: 1, name: "Paracetamol", quantity: 50, expiry: "2026-12" },
-  { id: 2, name: "Amoxicillin", quantity: 20, expiry: "2026-08" },
-  { id: 3, name: "Metformin", quantity: 100, expiry: "2027-05" },
-  { id: 4, name: "Ibuprofen", quantity: 30, expiry: "2026-11" },
-  { id: 5, name: "Salbutamol", quantity: 15, expiry: "2027-03" },
-  { id: 6, name: "Vitamin D", quantity: 40, expiry: "2027-02" },
+  {
+    id: 1,
+    name: "Paracetamol",
+    type: "Tablet",
+    batch: "PAR-001",
+    quantity: 50,
+    minQuantity: 20,
+    expiry: "2026-12",
+  },
+  {
+    id: 2,
+    name: "Amoxicillin",
+    type: "Capsule",
+    batch: "AMX-002",
+    quantity: 20,
+    minQuantity: 25,
+    expiry: "2026-08",
+  },
+  {
+    id: 3,
+    name: "Metformin",
+    type: "Tablet",
+    batch: "MET-003",
+    quantity: 100,
+    minQuantity: 20,
+    expiry: "2027-05",
+  },
+  {
+    id: 4,
+    name: "Ibuprofen",
+    type: "Tablet",
+    batch: "IBU-004",
+    quantity: 30,
+    minQuantity: 20,
+    expiry: "2026-11",
+  },
+  {
+    id: 5,
+    name: "Salbutamol",
+    type: "Inhaler",
+    batch: "SAL-005",
+    quantity: 15,
+    minQuantity: 20,
+    expiry: "2027-03",
+  },
+  {
+    id: 6,
+    name: "Vitamin D",
+    type: "Capsule",
+    batch: "VIT-006",
+    quantity: 40,
+    minQuantity: 20,
+    expiry: "2027-02",
+  },
 ];
 
 function formatExpiry(expiry) {
@@ -17,10 +65,14 @@ function formatExpiry(expiry) {
 
   const [year, month] = expiry.split("-");
 
-  return new Date(Number(year), Number(month) - 1, 1).toLocaleDateString(
-    "en-GB",
-    { month: "short", year: "numeric" }
-  );
+  return new Date(
+    Number(year),
+    Number(month) - 1,
+    1
+  ).toLocaleDateString("en-GB", {
+    month: "short",
+    year: "numeric",
+  });
 }
 
 function Medications() {
@@ -28,8 +80,12 @@ function Medications() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [showForm, setShowForm] = useState(false);
+
   const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [batch, setBatch] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [minQuantity, setMinQuantity] = useState("");
   const [expiry, setExpiry] = useState("");
   const [message, setMessage] = useState("");
 
@@ -44,16 +100,30 @@ function Medications() {
 
   const stats = {
     total: medications.length,
-    low: medicationRows.filter((med) => med.status === "Low Stock").length,
-    expiring: medicationRows.filter(
-      (med) => med.status === "Expiring Soon" || med.status === "Expired"
+    low: medicationRows.filter(
+      (med) => med.status === "Low Stock"
     ).length,
-    units: medications.reduce((sum, med) => sum + Number(med.quantity), 0),
+    expiring: medicationRows.filter(
+      (med) =>
+        med.status === "Expiring Soon" ||
+        med.status === "Expired"
+    ).length,
+    units: medications.reduce(
+      (sum, med) => sum + Number(med.quantity),
+      0
+    ),
   };
 
   const filteredMedications = medicationRows.filter((med) => {
-    const matchesSearch = med.name.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = filter === "All" || med.status === filter;
+    const searchText = search.toLowerCase();
+
+    const matchesSearch =
+      med.name.toLowerCase().includes(searchText) ||
+      med.type.toLowerCase().includes(searchText) ||
+      med.batch.toLowerCase().includes(searchText);
+
+    const matchesFilter =
+      filter === "All" || med.status === filter;
 
     return matchesSearch && matchesFilter;
   });
@@ -64,14 +134,25 @@ function Medications() {
     const newMedication = {
       id: Date.now(),
       name: name.trim(),
+      type: type.trim(),
+      batch: batch.trim(),
       quantity: Number(quantity),
+      minQuantity: Number(minQuantity),
       expiry,
     };
 
-    setMedications((current) => [...current, newMedication]);
+    setMedications((current) => [
+      ...current,
+      newMedication,
+    ]);
+
     setName("");
+    setType("");
+    setBatch("");
     setQuantity("");
+    setMinQuantity("");
     setExpiry("");
+
     setShowForm(false);
     setFilter("All");
     setSearch("");
@@ -85,9 +166,20 @@ function Medications() {
 
     if (!confirmed) return;
 
-    setMedications((current) => current.filter((med) => med.id !== id));
+    setMedications((current) =>
+      current.filter((med) => med.id !== id)
+    );
+
     setMessage("Medication removed from the demo inventory.");
   }
+
+  const filters = [
+    "All",
+    "Valid",
+    "Low Stock",
+    "Expiring Soon",
+    "Expired",
+  ];
 
   return (
     <section className="medications-page">
@@ -160,7 +252,7 @@ function Medications() {
           <div>
             <strong>Expiry review needed</strong>
             <p>
-              Check medicines marked Expired or Expiring Soon before use.
+              Check medicines marked Expired or Expiring before use.
               Follow your clinic's medication-handling policy.
             </p>
           </div>
@@ -197,6 +289,26 @@ function Medications() {
             </label>
 
             <label>
+              Type
+              <input
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                placeholder="e.g. Tablet"
+                required
+              />
+            </label>
+
+            <label>
+              Batch
+              <input
+                value={batch}
+                onChange={(e) => setBatch(e.target.value)}
+                placeholder="e.g. PAR-001"
+                required
+              />
+            </label>
+
+            <label>
               Quantity (units)
               <input
                 type="number"
@@ -205,6 +317,19 @@ function Medications() {
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 placeholder="Enter quantity"
+                required
+              />
+            </label>
+
+            <label>
+              Minimum stock
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={minQuantity}
+                onChange={(e) => setMinQuantity(e.target.value)}
+                placeholder="e.g. 20"
                 required
               />
             </label>
@@ -255,27 +380,27 @@ function Medications() {
         </div>
 
         <div className="medication-filters" aria-label="Filter medications">
-          {["All", "Valid", "Expiring Soon", "Expired", "Low Stock"].map(
-            (status) => (
-              <button
-                key={status}
-                type="button"
-                className={`medication-filter ${
-                  filter === status ? "selected" : ""
-                }`}
-                onClick={() => setFilter(status)}
-                aria-pressed={filter === status}
-              >
-                {status}
-                <span>
-                  {status === "All"
-                    ? medications.length
-                    : medicationRows.filter((med) => med.status === status)
-                        .length}
-                </span>
-              </button>
-            )
-          )}
+          {filters.map((status) => (
+            <button
+              key={status}
+              type="button"
+              className={`medication-filter ${
+                filter === status ? "selected" : ""
+              }`}
+              onClick={() => setFilter(status)}
+              aria-pressed={filter === status}
+            >
+              {status}
+
+              <span>
+                {status === "All"
+                  ? medications.length
+                  : medicationRows.filter(
+                      (med) => med.status === status
+                    ).length}
+              </span>
+            </button>
+          ))}
         </div>
 
         <div className="medication-table-wrapper">
@@ -283,7 +408,10 @@ function Medications() {
             <thead>
               <tr>
                 <th>Medication</th>
+                <th>Type</th>
+                <th>Batch</th>
                 <th>Quantity</th>
+                <th>Min Stock</th>
                 <th>Expiry date</th>
                 <th>Stock status</th>
                 <th>Action</th>
@@ -295,9 +423,13 @@ function Medications() {
                 <tr key={med.id}>
                   <td>
                     <span className="medication-name">
-                      <span className="medication-pill-icon" aria-hidden="true">
+                      <span
+                        className="medication-pill-icon"
+                        aria-hidden="true"
+                      >
                         ◈
                       </span>
+
                       <span>
                         <strong>{med.name}</strong>
                         <small>Clinic supply</small>
@@ -305,12 +437,18 @@ function Medications() {
                     </span>
                   </td>
 
+                  <td>{med.type}</td>
+
+                  <td>{med.batch}</td>
+
                   <td>
                     <strong className="medication-quantity">
                       {med.quantity}
                     </strong>
                     <span className="medication-units"> units</span>
                   </td>
+
+                  <td>{med.minQuantity}</td>
 
                   <td>{formatExpiry(med.expiry)}</td>
 
@@ -340,7 +478,7 @@ function Medications() {
 
               {filteredMedications.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="medication-empty">
+                  <td colSpan="8" className="medication-empty">
                     <span aria-hidden="true">⌕</span>
                     <strong>No medications found</strong>
                     <p>Try a different search or stock filter.</p>
