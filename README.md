@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Resort Clinic System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clinical information and analytics system for the small medical clinic inside a hotel/resort
+(1 doctor, 2 nurses). It replaces paper-only workflows with electronic patient records, while the
+signed paper intake form stays part of the process.
 
-## Available Scripts
+## What it does
 
-In the project directory, you can run:
+| Module | Description |
+|---|---|
+| Login & roles | Doctor and nurse accounts with different permissions |
+| Dashboard | Today's visits and follow-ups, medication alerts, active emergencies |
+| Patient records | Register patients, search, view visit history |
+| Clinical encounter | Complaint, history, examination, case classification, diagnosis, treatment |
+| Medications | Stock, batch numbers, expiry dates, *Expiring Soon* (6 months) and *Low Stock* alerts, medicine name search (RxNav API) |
+| Emergency alerts | Nurse sends an alert with type and location; the doctor receives it |
+| Monthly statistics | Cases by classification, nationality and room, with percentages (doctor only) |
+| Patient form | Printable patient intake form in the guest's language |
 
-### `npm start`
+## Team
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Member | Area |
+|---|---|
+| Hagar | Login, Dashboard, roles, backend setup & authentication, project board |
+| Menna | Patients, Clinical Encounter |
+| Salma | Medications, Emergency alerts |
+| Marvey | Statistics, Patient Form |
+| Ahmed | Follow-ups, GitHub Actions (CI), tests |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Tasks, priorities and deadlines are tracked on our GitHub Project board; every change goes through
+an issue → branch → pull request → review → merge.
 
-### `npm test`
+## Tech stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend:** React 19, React Router, CSS (in the repository root)
+- **Backend:** Java 21, Spring Boot 4, Spring Security + JWT, Spring Data JPA, Flyway (in [`backend/`](backend/README.md))
+- **Database:** PostgreSQL (Neon); H2 in-memory for backend tests
+- **Tests:** Jest + React Testing Library (frontend), JUnit 5 + MockMvc (backend)
 
-### `npm run build`
+## Run the frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Requires Node.js 18+.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+npm start          # http://localhost:3000
+npm test           # run the tests
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Demo accounts: `doctor` / `1234` and `nurse` / `1234`.
+The frontend currently uses demo data from `src/data/mockData.js`; it will be connected to the backend API step by step.
 
-### `npm run eject`
+## Run the backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+See [`backend/README.md`](backend/README.md) (Java 21+, a `backend/.env` file with the database settings, then `.\mvnw spring-boot:run`).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+├── public/                 static files (index.html, icons, manifest)
+├── src/
+│   ├── components/         shared parts (Layout = sidebar + top bar, Icons)
+│   ├── data/mockData.js    demo data used by the pages
+│   ├── pages/              one folder per page (Login, Dashboard, Patients, …)
+│   └── utils/              helpers (auth, medication status) + their tests
+└── backend/                Spring Boot REST API
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Privacy
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Only made-up demo data is used. Never commit real patient data or secrets (`backend/.env` is ignored by git).
