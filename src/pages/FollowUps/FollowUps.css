@@ -1,0 +1,272 @@
+
+
+.follow-ups-page {
+  width: 100%;
+}
+
+.follow-ups-page h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #142236;
+  margin-bottom: 6px;
+}
+
+.follow-ups-page > p {
+  color: #64748b;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.follow-ups-page table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid #dce3ed;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.follow-ups-page th {
+  background: #f4f6f9;
+  color: #52647a;
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.follow-ups-page td {
+  padding: 18px 16px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 14px;
+  color: #142236;
+  text-align: left;
+}
+
+.follow-ups-page td:first-child {
+  font-weight: 600;
+  color: #28588c;
+}
+
+.follow-ups-page tbody tr:hover {
+  background: #f5f8fc;
+}
+
+.follow-ups-page td:nth-child(4) {
+  font-weight: 600;
+  color: #28588c;
+}
+
+
+.follow-up-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.follow-ups-page .filter-btn {
+  padding: 10px 18px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #52647a;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.follow-ups-page .filter-btn:hover {
+  background: #e7eef8;
+}
+
+.follow-ups-page .filter-btn.active {
+  background: #28588c;
+  color: #ffffff;
+  border-color: #28588c;
+}
+
+.fu-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fu-status.today {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.fu-status.upcoming {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.fu-status.overdue {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.fu-status.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.fu-status.missed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.follow-ups-page td.fu-empty {
+  padding: 40px;
+  text-align: center;
+  color: #64748b;
+  font-weight: 400;
+}
+
+
+
+.follow-ups-page .fu-status-select {
+  padding: 9px 12px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #28588c;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.follow-ups-page .fu-status-select:hover {
+  border-color: #28588c;
+}
+
+.follow-ups-page .fu-status-select:focus {
+  outline: 2px solid #487db7;
+  outline-offset: 2px;
+}
+
+
+
+.follow-ups-page .fu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.fu-header p {
+  color: #64748b;
+  font-size: 15px;
+}
+
+.fu-primary-btn {
+  background: #28588c;
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fu-primary-btn:hover {
+  background: #1e4673;
+}
+
+.fu-form {
+  background: #ffffff;
+  border: 1px solid #dce3ed;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.fu-form h2 {
+  color: #142236;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.fu-form label {
+  display: block;
+  color: #142236;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.fu-form input,
+.fu-form select,
+.fu-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #142236;
+  font: inherit;
+  margin-bottom: 18px;
+}
+
+.fu-form input:focus,
+.fu-form select:focus,
+.fu-form textarea:focus {
+  outline: 2px solid #487db7;
+  outline-offset: 1px;
+}
+
+.fu-form textarea {
+  resize: vertical;
+}
+
+.fu-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.fu-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.fu-cancel-btn {
+  background: #ffffff;
+  color: #52647a;
+  border: 1px solid #dce3ed;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fu-cancel-btn:hover {
+  background: #f4f6f9;
+}
+
+.fu-table-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .fu-form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

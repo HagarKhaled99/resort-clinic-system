@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -16,6 +17,8 @@ import Emergency from './pages/Emergency/Emergency';
 // ---- Marvey ----
 import Statistics from './pages/Statistics/Statistics';
 import PatientForm from './pages/PatientForm/PatientForm';
+// ---- Follow-Ups ----
+import FollowUps from './pages/FollowUps/FollowUps';
 
 // Any page inside this wrapper needs the user to be logged in.
 function ProtectedRoute({ children }) {
@@ -44,9 +47,10 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/encounter" element={<Encounter />} />
+          <Route path="/follow-ups" element={<FollowUps />} />
           <Route path="/medications" element={<Medications />} />
           <Route path="/emergency" element={<Emergency />} />
-                    <Route
+          <Route
             path="/statistics"
             element={<RoleRoute roles={['doctor']}><Statistics /></RoleRoute>}
           />

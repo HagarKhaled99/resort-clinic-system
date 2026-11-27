@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from 'react-router-dom';
 import { getCurrentUser, isDoctor, isNurse } from '../../utils/auth';
 import {
@@ -9,7 +10,6 @@ import {
 } from '../../components/Icons';
 import './Dashboard.css';
 
-// Days between today and a "YYYY-MM-DD" date (negative = in the past)
 const daysFromToday = (iso) => {
   const t = new Date(todayISO());
   return Math.round((new Date(iso) - t) / 86400000);
@@ -22,7 +22,6 @@ const greeting = () => {
   return 'Good evening';
 };
 
-// Decide what warning a medication needs (or null if it's fine)
 const medicationStatus = (med) => {
   const days = daysFromToday(med.expiryDate);
   if (days < 0) return { label: 'Expired', tone: 'danger', order: 0 };
@@ -31,7 +30,21 @@ const medicationStatus = (med) => {
   return null;
 };
 
-const visitBadge = { Completed: 'success', 'In progress': 'info', Waiting: 'warning' };
+const visitBadge = {
+  Completed: 'success',
+  'In progress': 'info',
+  Waiting: 'warning'
+};
+
+// Load saved follow-up appointments
+function getSavedFollowUps() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('clinic-follow-ups'));
+    return Array.isArray(saved) ? saved : followUps;
+  } catch {
+    return followUps;
+  }
+}
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -39,26 +52,30 @@ function Dashboard() {
   const today = todayISO();
 
   const todaysVisits = visits.filter((v) => v.date === today);
-  const todaysFollowUps = followUps
-    .filter((f) => f.date === today)
+
+  const todaysFollowUps = getSavedFollowUps()
+    .filter((f) => f.date === today &&
+      !['Completed', 'Missed'].includes(f.status))
     .sort((a, b) => a.time.localeCompare(b.time));
+
   const medAlerts = medications
     .map((m) => ({ ...m, status: medicationStatus(m) }))
     .filter((m) => m.status)
     .sort((a, b) => a.status.order - b.status.order);
+
   const activeEmergencies = emergencyAlerts.filter((a) => a.status === 'Active');
   const recentAlerts = [...emergencyAlerts].slice(0, 3);
 
   const stats = [
     { label: "Today's visits", value: todaysVisits.length, hint: `${todaysVisits.filter((v) => v.status !== 'Completed').length} still open`, icon: EncounterIcon, tone: 'teal', to: '/encounter' },
-    { label: 'Follow-ups today', value: todaysFollowUps.length, hint: 'Before guests check out', icon: CalendarIcon, tone: 'blue', to: '/patients' },
+    { label: 'Follow-ups today', value: todaysFollowUps.length, hint: 'Before guests check out', icon: CalendarIcon, tone: 'blue', to: '/follow-ups' },
     { label: 'Medication alerts', value: medAlerts.length, hint: `${medAlerts.filter((m) => m.status.tone === 'danger').length} expired`, icon: PillIcon, tone: 'amber', to: '/medications' },
     { label: 'Active emergencies', value: activeEmergencies.length, hint: activeEmergencies.length ? 'Needs attention' : 'All clear', icon: AlertIcon, tone: 'red', to: '/emergency' },
   ];
 
   return (
     <div className="dashboard">
-      {/* ---------- Welcome ---------- */}
+      {/* Welcome */}
       <section className="dash-welcome">
         <div>
           <h2>{greeting()}, {user?.name?.split(' ').slice(0, 2).join(' ')} 👋</h2>
@@ -69,14 +86,14 @@ function Dashboard() {
             <PlusIcon size={17} /> New patient
           </button>
           {isDoctor() && (
-          <button className="btn btn-primary" onClick={() => navigate('/encounter')}>
-            <EncounterIcon size={17} /> New visit
-          </button>
+            <button className="btn btn-primary" onClick={() => navigate('/encounter')}>
+              <EncounterIcon size={17} /> New visit
+            </button>
           )}
         </div>
       </section>
 
-      {/* ---------- Active emergency banner ---------- */}
+      {/* Active emergency banner */}
       {activeEmergencies.map((a) => (
         <Link to="/emergency" key={a.id} className="emergency-banner">
           <span className="pulse"><AlertIcon size={20} /></span>
@@ -88,7 +105,7 @@ function Dashboard() {
         </Link>
       ))}
 
-      {/* ---------- Stat cards ---------- */}
+      {/* Stat cards */}
       <section className="stat-grid">
         {stats.map(({ label, value, hint, icon: Icon, tone, to }) => (
           <Link to={to} key={label} className={`card stat-card tone-${tone}`}>
@@ -102,21 +119,25 @@ function Dashboard() {
         ))}
       </section>
 
-      {/* ---------- Main panels ---------- */}
       <section className="dash-grid">
+
         {/* Today's follow-ups */}
         <article className="card panel">
           <header className="panel-head">
             <h3><CalendarIcon size={18} /> Today's follow-ups</h3>
-            <Link to="/patients" className="panel-link">View all</Link>
+            <Link to="/follow-ups" className="panel-link">View all</Link>
           </header>
+
           {todaysFollowUps.length === 0 ? (
-            <p className="empty">No follow-ups scheduled for today.</p>
+            <p className="empty">No pending follow-ups for today.</p>
           ) : (
             <ul className="list">
               {todaysFollowUps.map((f) => {
                 const p = getPatient(f.patientId);
+                if (!p) return null;
+
                 const leaving = daysFromToday(p.checkOut);
+
                 return (
                   <li key={f.id} className="list-row">
                     <span className="time-chip">{f.time}</span>
@@ -142,6 +163,7 @@ function Dashboard() {
             <h3><PillIcon size={18} /> Medication alerts</h3>
             <Link to="/medications" className="panel-link">Inventory</Link>
           </header>
+
           {medAlerts.length === 0 ? (
             <p className="empty">All medications are in stock and valid.</p>
           ) : (
@@ -166,6 +188,7 @@ function Dashboard() {
             <h3><AlertIcon size={18} /> Emergency alerts</h3>
             <Link to="/emergency" className="panel-link">All alerts</Link>
           </header>
+
           <ul className="list">
             {recentAlerts.map((a) => (
               <li key={a.id} className="list-row align-start">
@@ -181,18 +204,21 @@ function Dashboard() {
               </li>
             ))}
           </ul>
+
           {isNurse() && (
-          <button className="btn btn-danger panel-btn" onClick={() => navigate('/emergency')}>
-            <AlertIcon size={16} /> Send emergency alert
-          </button>
+            <button className="btn btn-danger panel-btn" onClick={() => navigate('/emergency')}>
+              <AlertIcon size={16} /> Send emergency alert
+            </button>
           )}
         </article>
+
         {/* Recent visits */}
         <article className="card panel panel-wide">
           <header className="panel-head">
             <h3><PatientsIcon size={18} /> Today's visits</h3>
             <Link to="/patients" className="panel-link">Patient records</Link>
           </header>
+
           <div className="table-wrap">
             <table className="table">
               <thead>
@@ -226,7 +252,6 @@ function Dashboard() {
             </table>
           </div>
         </article>
-
       </section>
     </div>
   );
