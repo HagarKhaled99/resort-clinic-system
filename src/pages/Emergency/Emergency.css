@@ -243,3 +243,41 @@
     display: none;
   }
 }
+
+
+/* Emergency workflow statuses */
+.emergency-status.active {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.emergency-status.resolved {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.emergency-alert-item {
+  border-left: 4px solid var(--danger);
+}
+
+.emergency-alert-item:has(.emergency-status.resolved) {
+  border-left-color: var(--success);
+}
+
+.emergency-resolve-button {
+  margin-top: 14px;
+}
+
+.emergency-alert-item .emergency-status {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .emergency-alert-item {
+    padding: 14px;
+  }
+
+  .emergency-alert-item-heading {
+    align-items: flex-start;
+  }
+}
