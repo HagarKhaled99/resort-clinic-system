@@ -28,3 +28,11 @@ export function getCurrentUser() {
     return null;
   }
 }
+// Role helpers – used to show or hide things for doctor / nurse
+export function hasRole(...roles) {
+  const user = getCurrentUser();
+  return Boolean(user && roles.includes(user.role));
+}
+
+export const isDoctor = () => hasRole('doctor');
+export const isNurse = () => hasRole('nurse');
