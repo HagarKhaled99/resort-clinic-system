@@ -1,5 +1,6 @@
-// Fake login for now (no backend). The logged-in user is saved in localStorage
-// so a page refresh does not log you out.
+// Fake login for now (no backend). The logged-in user is saved in sessionStorage:
+// a page refresh keeps you logged in, but closing the browser/tab logs you out
+// (safer on a shared clinic computer).
 import { users } from '../data/mockData';
 
 const KEY = 'resortClinicUser';
@@ -13,17 +14,17 @@ export function login(username, password, role) {
     return { ok: false, message: `This account is not a ${role} account.` };
   }
   const { password: _ignored, ...safeUser } = user;
-  localStorage.setItem(KEY, JSON.stringify(safeUser));
+  sessionStorage.setItem(KEY, JSON.stringify(safeUser));
   return { ok: true, user: safeUser };
 }
 
 export function logout() {
-  localStorage.removeItem(KEY);
+  sessionStorage.removeItem(KEY);
 }
 
 export function getCurrentUser() {
   try {
-    return JSON.parse(localStorage.getItem(KEY));
+    return JSON.parse(sessionStorage.getItem(KEY));
   } catch {
     return null;
   }

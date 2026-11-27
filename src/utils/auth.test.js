@@ -1,7 +1,7 @@
 import { login, logout, getCurrentUser } from './auth';
 
 // Start every test logged out
-beforeEach(() => localStorage.clear());
+beforeEach(() => sessionStorage.clear());
 
 test('logs in the doctor with the right password', () => {
   const result = login('doctor', '1234', 'doctor');
