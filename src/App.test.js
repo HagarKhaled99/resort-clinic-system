@@ -1,8 +1,17 @@
+
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+beforeEach(() => {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.history.replaceState({}, '', '/login');
+});
+
+test('renders the clinic login page', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  expect(screen.getByText(/welcome back/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/enter your username/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/enter your password/i)).toBeInTheDocument();
 });
