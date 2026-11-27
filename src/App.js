@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
-import { getCurrentUser } from './utils/auth';
+import { getCurrentUser, hasRole } from './utils/auth';
 import Layout from './components/Layout/Layout';
 
 // ---- Hagar ----
@@ -27,6 +27,11 @@ function ProtectedRoute({ children }) {
   return getCurrentUser() ? children : <Navigate to="/login" replace />;
 }
 
+// Only users with one of these roles may open the page; others go to the dashboard.
+function RoleRoute({ roles, children }) {
+  return hasRole(...roles) ? children : <Navigate to="/dashboard" replace />;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -46,7 +51,10 @@ function App() {
           <Route path="/encounter" element={<Encounter />} />
           <Route path="/medications" element={<Medications />} />
           <Route path="/emergency" element={<Emergency />} />
-          <Route path="/statistics" element={<Statistics />} />
+                    <Route
+            path="/statistics"
+            element={<RoleRoute roles={['doctor']}><Statistics /></RoleRoute>}
+          />
           <Route path="/patient-form" element={<PatientForm />} />
           <Route path="/patient-intake" element={<PatientIntakeForm />} />
         </Route>
