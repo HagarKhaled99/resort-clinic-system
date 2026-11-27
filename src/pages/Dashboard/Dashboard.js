@@ -26,7 +26,7 @@ const greeting = () => {
 const medicationStatus = (med) => {
   const days = daysFromToday(med.expiryDate);
   if (days < 0) return { label: 'Expired', tone: 'danger', order: 0 };
-  if (days <= 30) return { label: `Expires in ${days} day${days === 1 ? '' : 's'}`, tone: 'warning', order: 1 };
+  if (days <= 180) return { label: `Expires in ${days} day${days === 1 ? '' : 's'}`, tone: 'warning', order: 1 };
   if (med.quantity < med.minQuantity) return { label: `Low stock · ${med.quantity} left`, tone: 'warning', order: 2 };
   return null;
 };
