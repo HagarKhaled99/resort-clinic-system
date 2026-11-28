@@ -22,6 +22,9 @@ import Statistics from './pages/Statistics/Statistics';
 import PatientForm from './pages/PatientForm/PatientForm';
 import PatientIntakeForm from './pages/PatientIntakeForm/PatientIntakeForm';
 
+// ---- Follow-Ups ----
+import FollowUps from './pages/FollowUps/FollowUps';
+
 // Any page inside this wrapper needs the user to be logged in.
 function ProtectedRoute({ children }) {
   return getCurrentUser() ? children : <Navigate to="/login" replace />;
@@ -49,9 +52,10 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/encounter" element={<Encounter />} />
+          <Route path="/follow-ups" element={<FollowUps />} />
           <Route path="/medications" element={<Medications />} />
           <Route path="/emergency" element={<Emergency />} />
-                    <Route
+          <Route
             path="/statistics"
             element={<RoleRoute roles={['doctor']}><Statistics /></RoleRoute>}
           />

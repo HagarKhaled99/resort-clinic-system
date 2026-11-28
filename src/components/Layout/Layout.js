@@ -1,9 +1,11 @@
+
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { getCurrentUser, logout, hasRole } from '../../utils/auth';
 import {
   DashboardIcon, PatientsIcon, EncounterIcon, PillIcon, AlertIcon,
   ChartIcon, PrinterIcon, LogoutIcon, MenuIcon, CloseIcon, LogoMark,
+  CalendarIcon,
 } from '../Icons';
 import './Layout.css';
 
@@ -12,9 +14,10 @@ export const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: DashboardIcon },
   { to: '/patients', label: 'Patient Records', icon: PatientsIcon },
   { to: '/encounter', label: 'Clinical Encounter', icon: EncounterIcon },
+  { to: '/follow-ups', label: 'Follow-Ups', icon: CalendarIcon },
   { to: '/medications', label: 'Medications', icon: PillIcon },
   { to: '/emergency', label: 'Emergency Alert', icon: AlertIcon },
-    { to: '/statistics', label: 'Monthly Statistics', icon: ChartIcon, roles: ['doctor'] },
+  { to: '/statistics', label: 'Monthly Statistics', icon: ChartIcon, roles: ['doctor'] },
   { to: '/patient-intake', label: 'Patient Intake Form', icon: PrinterIcon },
 ];
 
@@ -24,7 +27,8 @@ const initials = (name = '') =>
 function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const user = getCurrentUser();
-    // Items without "roles" are for everyone; others only for those roles
+
+  // Items without "roles" are for everyone; others only for those roles
   const visibleItems = navItems.filter((item) => !item.roles || hasRole(...item.roles));
   const navigate = useNavigate();
   const location = useLocation();
@@ -101,7 +105,7 @@ function Layout() {
         </header>
 
         <main className="content">
-          <Outlet /> {/* ← the current page is rendered here */}
+          <Outlet />
         </main>
       </div>
     </div>
